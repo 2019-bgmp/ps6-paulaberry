@@ -1,0 +1,11 @@
+Parameters: kmer length = 3
+histogram bucket = 100
+
+Total number of contigs: 3
+Maximum contig length: 20
+Mean contig length: 15
+Total length of genome assembly: 45
+Mean depth of coverage: 254.993426
+N50: 15
+# Contig length Number of Contigs in this category
+0       3
