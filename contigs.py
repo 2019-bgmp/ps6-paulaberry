@@ -9,7 +9,7 @@ kmer_len = 49 # set kmer length value
 def header_values(line):
 	"""A function that returns the values of Ck (kmerized length of contig) and coverage for an individual read"""
 	fasta_id = str(line)
-	id_array = fasta_id.split("_")
+	id_array = re.split(r"_", str(line))
 	Ck = id_array[3]
 	coverage = id_array[5]
 	return Ck, coverage
@@ -55,7 +55,6 @@ def N50_calc(any_list):
 
 def histogram_dictionary(any_list, bucket, dictionary):
 	"""A function to populate a dictionary of histogram values"""
-	#histogram = {}
 	any_list.sort()
 	max_range = (max(any_list) // bucket) * 100
 	for i in range(0, max_range, bucket):
@@ -66,11 +65,6 @@ def histogram_dictionary(any_list, bucket, dictionary):
 			dictionary[((int(i) // int(bucket)) * int(bucket))] = dictionary[((int(i) // int(bucket)) * int(bucket))] + 1
 		else:
 			dictionary[((int(i) // int(bucket)) * int(bucket))] = 1
-	#print(histogram)
-	#return(histogram)
-
-
-#print(round(120, -2))
 
 f = open("contigs.fa", "r")
 Ck_list = []
@@ -81,13 +75,15 @@ read_counter = 0
 
 for line in f:
 	line = line.strip()
-	if line.startswith(">NODE_") == True:
+	if re.search(r">NODE_[0-9]+_length_[0-9]+_cov_[0-9]+.[0-9]",line) != None:
 		read_counter = read_counter + 1
 		Ck, coverage = header_values(line)
 		read_length = read_lengths(Ck, kmer_len)
 		Ck_list.append(Ck)
 		coverage_list.append(float(coverage))
 		read_length_list.append(int(read_length))
+
+f.close()
 
 
 
@@ -102,5 +98,3 @@ histogram_dictionary(read_length_list, 100, histogram)
 print("# Contig length	Number of Contigs in this category")
 for i in histogram:
 	print(str(i) + "	" + str(histogram[i]))
-#print(Ck_list)
-#print(coverage_list)

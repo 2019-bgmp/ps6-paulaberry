@@ -1,0 +1,102 @@
+###Notebook - PS6###
+
+7/16/2019_____________________________________________________________________________________
+Definitions for assignment terms:
+
+Ck(contig kmer coverage, number of kmers in that contig in blue in assignment) = C (coverage value? Blue in assignment?) * (L-k + 1)/L (solving for C) L = read length, k = kmer length (49)
+
+Turning Red value in assignment to length:
+kmer length of coverage (red value) + kmer length (49) - 1 = physical length
+
+"Adjust kmer length to physical length" means solve for physical length?
+   yes per Pete
+
+7/17/2019______________________________________________________________________
+Unit tests successful. Settings: bucket = 100, file = unit_test.fa, kmer_len = 3
+expected results:
+Total number of contigs: 3
+Maximum contig length: 20
+Mean contig length: 15
+Total length of genome assembly: 45
+Mean depth of coverage: 254.993426
+N50: 15
+# Contig length Number of Contigs in this category
+0       3
+
+uploaded everything to talapas
+
+in bgmp_py3 environment
+  velvet-1.2.10
+  Compilation settings:
+  CATEGORIES = 4
+  MAXKMERLENGTH = 191
+  OPENMP
+  LONGSEQUENCES
+
+velveth_script.sh - filename for running velvet h. Submitted batch job 9614942 @ 11:16:53
+  input: /projects/bgmp/shared/Bi621/800_3_PE5_interleaved.fq*
+  output: /home/pberry/bgmp/Bi621/PS6/[kmersize]
+  kmer size: 31, 41, 49
+
+  Remember to specify fastq files! Submitted batch job 9614959 @ 11:27:46
+
+helps to edit the script on talapas, not my local directory. Submitted batch job 9614967 @11:32:52 - SUCCESS!
+Now need to get average read length from sequences file
+
+creating read_coverage.py to count number of nucleotides sequenced in each fastq file and get average length of reads.
+results:
+      Unmatched file is (62089591, 73.06351119024056) nucleotides long, avg read length.
+      fq_1 file is (68009851, 79.17429792465329) nucleotides long, avg read length.
+      fq_2 file is (67083157, 78.0954785218437) nucleotides long, avg read length.
+
+Changed velveth_script.sh to deal with the short paired files and the unpaired file. Submitted batch job 9615950 @16:06:59
+velveth.err:
+  Elapsed (wall clock) time (h:mm:ss or m:ss): 0:35.89
+  Percent of CPU this job got: 230%
+  Exit status: 0
+
+ran velvetg_script.sh Submitted batch job 9616010 @16:47:23
+  Elapsed (wall clock) time (h:mm:ss or m:ss): 0:40.95
+  Percent of CPU this job got: 236%
+  Exit status: 0
+
+Performed contigs.py assay on local machine as computing time is trivial.
+
+Ran velvetg_script.sh for kmer size 49, cut off 20x. Submitted batch job 9616296 @ 22:28:10
+  Elapsed (wall clock) time (h:mm:ss or m:ss): 0:30.29
+  Percent of CPU this job got: 207%
+  Exit status: 0
+
+Ran velvetg for kmer size 49, cut off 60x. Submitted batch job 9616303 @ 22:37:41
+  Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.28
+  Percent of CPU this job got: 99%
+  Exit status: 0
+
+Ran velvetg for kmer size 49, cut off auto. Submitted batch job 9616304 @ 22:48:51
+  Percent of CPU this job got: 99%
+  Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.26
+  Exit status: 0
+
+Ran velvetg for kmer size 49, cut off auto, min contig length 500. Submitted batch job 9616309 @ 23:05:51
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 0:05.26
+Exit status: 0
+
+7/18/19_______________________________________________________________________________
+Thanks to Nick for assistance with converting searches to regex, all tests return same results.
+Polished up graphics. Final files turned in:
+  contigs.py
+  kmer49contigs.txt
+  expected_results.txt
+  kmer31_coveragenull.txt
+  kmer41_coveragenull.txt
+  kmer49_coveragenull.txt
+  kmer49_cutoff20.txt
+  kmer49_cutoff60.txt
+  kmer49_cutoffauto.txt
+  kmer49_cutoffauto_mincontig500.txt
+  ps6-paulaberry.pdf
+  read_coverage.py
+  unit_test.fa
+  velvetg_script.sh
+  velveth_script.sh
